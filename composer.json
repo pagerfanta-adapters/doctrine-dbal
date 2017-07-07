@@ -19,7 +19,7 @@
     "suggest": {
     },
     "autoload": {
-        "psr-4": { "PagerfantaAdapters\\DBAL\\": "" }
+        "psr-4": { "PagerfantaAdapters\\Doctrine\\DBAL\\": "" }
     },
     "extra": {
         "branch-alias": {
