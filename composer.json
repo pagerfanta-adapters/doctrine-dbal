@@ -5,7 +5,7 @@
     "type": "library",
     "license": "MIT",
     "authors": [
-        {"name": "Jean-Bernard Addor", "email": "jean-bernard.addor@umontreal.ca"},
+        {"name": "Jean-Bernard Addor"},
         {"name": "Michael Williams", "email": "michael@whizdevelopment.com"},
         {"name": "Pablo Díez", "email": "pablodip@gmail.com"}
     ],
