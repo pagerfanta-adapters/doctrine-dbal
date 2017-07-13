@@ -1,12 +1,13 @@
 <?php
 
+// As the original file was hard use at its original place,
+// because it was in a hidden namespace, it has been copyed unchanged!
+
 namespace PagerfantaAdapters\Doctrine\DBAL\Tests;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Schema\Schema;
-
-die('Unused');///////////////////////////////////////////////////////////////////////
 
 abstract class DoctrineDbalTestCase extends \PHPUnit_Framework_TestCase
 {
