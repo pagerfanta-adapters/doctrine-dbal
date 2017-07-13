@@ -6,6 +6,8 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Schema\Schema;
 
+die('Unused');///////////////////////////////////////////////////////////////////////
+
 abstract class DoctrineDbalTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
