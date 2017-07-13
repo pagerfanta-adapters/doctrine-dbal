@@ -52,7 +52,7 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
         return new DoctrineDbal2ModifiersAdapter($this->qb, $QueryBuilderModifier, $QueryBuilderModifier);
     }
 
-    private function doTestGetSlice(DoctrineDbalAdapter $adapter)
+    private function doTestGetSlice(DoctrineDbal2ModifiersAdapter $adapter)
     {
         $offset = 30;
         $length = 10;
