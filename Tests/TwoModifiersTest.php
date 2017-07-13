@@ -46,7 +46,8 @@ class DoctrineDbalAdapterTest extends DoctrineDbalTestCase
 
     private function createAdapterToTestGetSlice()
     {
-        $countQueryBuilderModifier = function () {};
+        $countQueryBuilderModifier = function () {
+        };
 
         return new DoctrineDbalAdapter($this->qb, $countQueryBuilderModifier);
     }
@@ -71,7 +72,8 @@ class DoctrineDbalAdapterTest extends DoctrineDbalTestCase
     public function testItShouldThrowAnInvalidArgumentExceptionIfTheQueryIsNotSelect()
     {
         $this->qb->delete('posts');
-        $countQueryModifier = function () {};
+        $countQueryModifier = function () {
+        };
 
         new DoctrineDbalAdapter($this->qb, $countQueryModifier);
     }
