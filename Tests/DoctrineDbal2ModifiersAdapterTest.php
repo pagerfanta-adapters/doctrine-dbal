@@ -75,7 +75,7 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
         $countQueryModifier = function () {
         };
 
-        new DoctrineDbalAdapter($this->qb, $countQueryModifier);
+        new DoctrineDbal2ModifiersAdapter($this->qb, $countQueryModifier);
     }
 
     public function testItShouldCloneTheQuery()
@@ -95,7 +95,7 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
     {
         $countQueryBuilderModifier = 'ups';
 
-        new DoctrineDbalAdapter($this->qb, $countQueryBuilderModifier);
+        new DoctrineDbal2ModifiersAdapter($this->qb, $countQueryBuilderModifier);
     }
 
     private function createAdapterToTestGetNbResults()
