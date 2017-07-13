@@ -3,7 +3,7 @@
 namespace PagerfantaAdapters\Doctrine\DBAL\Tests;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use PagerfantaAdapters\Doctrine\DBAL\DoctrineDbalModifiersAdapter;
+use PagerfantaAdapters\Doctrine\DBAL\DoctrineDbal2ModifiersAdapter;
 
 class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
 {
@@ -105,6 +105,6 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
                          ->setMaxResults(1);
         };
 
-        return new TwoModifiers($this->qb, $countQueryBuilderModifier);
+        return new DoctrineDbal2ModifiersAdapter($this->qb, $countQueryBuilderModifier);
     }
 }
