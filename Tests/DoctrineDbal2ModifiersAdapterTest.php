@@ -72,10 +72,10 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
     public function testItShouldThrowAnInvalidArgumentExceptionIfTheQueryIsNotSelect()
     {
         $this->qb->delete('posts');
-        $countQueryModifier = function () {
+        $QueryModifier = function () {
         };
 
-        new DoctrineDbal2ModifiersAdapter($this->qb, $countQueryModifier);
+        new DoctrineDbal2ModifiersAdapter($this->qb, $QueryModifier, $QueryModifier);
     }
 
     public function testItShouldCloneTheQuery()
