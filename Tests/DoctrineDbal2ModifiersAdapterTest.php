@@ -49,7 +49,7 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
         $countQueryBuilderModifier = function () {
         };
 
-        return new DoctrineDbalAdapter($this->qb, $countQueryBuilderModifier);
+        return new DoctrineDbal2ModifiersAdapter($this->qb, $countQueryBuilderModifier);
     }
 
     private function doTestGetSlice(DoctrineDbalAdapter $adapter)
