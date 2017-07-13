@@ -46,10 +46,10 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
 
     private function createAdapterToTestGetSlice()
     {
-        $countQueryBuilderModifier = function () {
+        $QueryBuilderModifier = function () {
         };
 
-        return new DoctrineDbal2ModifiersAdapter($this->qb, $countQueryBuilderModifier);
+        return new DoctrineDbal2ModifiersAdapter($this->qb, $QueryBuilderModifier, $QueryBuilderModifier);
     }
 
     private function doTestGetSlice(DoctrineDbalAdapter $adapter)
