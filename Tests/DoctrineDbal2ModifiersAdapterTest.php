@@ -2,7 +2,8 @@
 
 // TODO
 //* Add tests specific to DoctrineDbal2ModifiersAdapter
-//* Add tests with (stricly) monotonly ordered queries and show error with Postgres or maybe even Sqlite on original Pagerfanta
+//* Add tests with (stricly) monotonly ordered queries and show error
+// with Postgres or maybe even Sqlite on original Pagerfanta
 
 namespace PagerfantaAdapters\Doctrine\DBAL\Tests;
 
