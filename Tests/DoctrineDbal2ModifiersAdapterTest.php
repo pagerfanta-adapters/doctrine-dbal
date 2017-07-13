@@ -23,7 +23,7 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
         $this->doTestGetNbResults($adapter);
     }
 
-    private function doTestGetNbResults(DoctrineDbalAdapter $adapter)
+    private function doTestGetNbResults(DoctrineDbal2ModifiersAdapter $adapter)
     {
         $this->assertSame(50, $adapter->getNbResults());
     }
