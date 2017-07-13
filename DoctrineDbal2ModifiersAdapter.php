@@ -11,7 +11,7 @@ use Pagerfanta\Adapter\AdapterInterface;
  * @author Michael Williams <michael@whizdevelopment.com>
  * @author Pablo Díez <pablodip@gmail.com>
  */
-class TwoModifiers implements AdapterInterface
+class DoctrineDbal2ModifiersAdapter implements AdapterInterface
 {
     private $queryBuilder;
     private $finishQueryBuilderModifier;
