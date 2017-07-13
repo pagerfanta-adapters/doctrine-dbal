@@ -1,6 +1,6 @@
 <?php
 
-namespace Pagerfanta\Tests\Adapter;
+namespace PagerfantaAdapters\Doctrine\DBAL\Tests;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineDbalAdapter;
