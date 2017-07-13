@@ -93,9 +93,13 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
      */
     public function testItShouldThrowAnInvalidArgumentExceptionIfTheCountQueryBuilderModifierIsNotACallable()
     {
+        $finishQueryBuilderModifier = function (QueryBuilder $queryBuilder) {
+            // $queryBuilder->orderBy($orderby, 'ASC');
+        };
+
         $countQueryBuilderModifier = 'ups';
 
-        new DoctrineDbal2ModifiersAdapter($this->qb, $countQueryBuilderModifier);
+        new DoctrineDbal2ModifiersAdapter($this->qb, $finishQueryBuilderModifier, $countQueryBuilderModifier);
     }
 
     private function createAdapterToTestGetNbResults()
