@@ -3,9 +3,9 @@
 namespace PagerfantaAdapters\Doctrine\DBAL\Tests;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use PagerfantaAdapters\Doctrine\DBAL\TwoModifiers;
+use PagerfantaAdapters\Doctrine\DBAL\DoctrineDbalModifiersAdapter;
 
-class DoctrineDbalAdapterTest extends DoctrineDbalTestCase
+class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
 {
     public function testGetNbResults()
     {
