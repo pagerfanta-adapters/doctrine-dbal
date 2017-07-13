@@ -2,11 +2,9 @@
 
 namespace PagerfantaAdapters\Doctrine\DBAL;
 
-
 use Doctrine\DBAL\Query\QueryBuilder;
 use Pagerfanta\Exception\InvalidArgumentException;
 use Pagerfanta\Adapter\AdapterInterface;
-
 
 /**
  * @author Jean-Bernard Addor <jean-bernard.addor@umontreal.ca>
