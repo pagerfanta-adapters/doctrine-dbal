@@ -105,6 +105,6 @@ class DoctrineDbalAdapterTest extends DoctrineDbalTestCase
                          ->setMaxResults(1);
         };
 
-        return new DoctrineDbalAdapter($this->qb, $countQueryBuilderModifier);
+        return new TwoModifiers($this->qb, $countQueryBuilderModifier);
     }
 }
