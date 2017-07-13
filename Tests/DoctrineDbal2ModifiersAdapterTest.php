@@ -100,6 +100,10 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
 
     private function createAdapterToTestGetNbResults()
     {
+        $finishQueryBuilderModifier = function (QueryBuilder $queryBuilder) {
+            // $queryBuilder->orderBy($orderby, 'ASC');
+        };
+
         $countQueryBuilderModifier = function (QueryBuilder $queryBuilder) {
             $queryBuilder->select('COUNT(DISTINCT p.id) AS total_results')
                          ->setMaxResults(1);
