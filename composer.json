@@ -9,15 +9,13 @@
         {"name": "Michael Williams", "email": "michael@whizdevelopment.com"},
         {"name": "Pablo Díez", "email": "pablodip@gmail.com"}
     ],
-    "prefer-stable": true,
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.0",
         "doctrine/dbal": "~2.3",
         "pagerfanta/pagerfanta": "^1.0.5"
     },
     "require-dev": {
-        "dbal-util/dbal-testing-util": "^2.5.x-dev",
+        "dbal-util/dbal-testing-util": "^2.4@dev",
         "phpunit/phpunit": "~4 | ~5 | ~6"
     },
     "suggest": {
