@@ -1,7 +1,7 @@
 {
     "name": "pagerfanta-adapters/doctrine-dbal",
     "description": "Pagination for PHP 5.3 (contributed adapters)",
-    "keywords": ["page","paging", "paginator", "pagination", "dbal"],
+    "keywords": ["page","paging", "paginator", "pagination", "dbal", "snowyowl"],
     "type": "library",
     "license": "MIT",
     "authors": [
