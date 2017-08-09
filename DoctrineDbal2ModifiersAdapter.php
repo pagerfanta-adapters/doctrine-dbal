@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Doctrine DBAL Util package.
+ * This file is part of the Pagerfanta Adapters package.
  *
  * (c) Jean-Bernard Addor
  *
