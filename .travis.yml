@@ -40,6 +40,7 @@ install:
   # - composer up --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
   - composer install --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
   - composer show
+  - composer show --outdated
 
 before_script:
 
