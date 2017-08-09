@@ -34,6 +34,7 @@ before_install:
 
 install:
   - composer validate
+  - composer require --dev phpunit/phpunit
   - if [[ $TRAVIS_PHP_VERSION = '7.1' ]]; then composer require --dev friendsofphp/php-cs-fixer; fi
   # - composer install --no-scripts --no-progress --no-suggest
   # - cp config/parameters.yml.travis config/parameters.yml
