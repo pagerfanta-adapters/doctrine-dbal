@@ -1,0 +1,66 @@
+language: php
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+addons:
+  # postgresql: "9.6"
+
+services:
+  # - postgresql
+
+matrix:
+  fast_finish: true
+  include:
+    # - php: 5.4
+    # - php: 5.5
+    # - php: 5.6
+    # - php: 7.0
+    - php: 7.1
+    # - php: 7.2
+    # - php: nightly
+
+before_install:
+  - if [ -f /home/travis/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/xdebug.ini ]; then phpenv config-rm xdebug.ini; fi
+  - for f in $(find . -path './vendor' -prune -o -name \*.php -print) ; do php -l $f ; done # Do this first!
+  - composer self-update # May help using cache for php packages.
+  # - ls /home/travis/.phpenv/versions/5.6/etc/conf.d
+  # - phpenv config-add ~travis.php.ini # name choosen for it to be executed after travis.ini
+  # - ls /home/travis/.phpenv/versions/5.6/etc/conf.d
+  #^ Shows the (alphabetical) order used for execution, last executed overrides the parameters
+  # - psql -c 'create database travis_ci_test;' -U postgres
+
+install:
+  - composer validate
+  - if [[ $TRAVIS_PHP_VERSION = '7.1' ]]; then composer require --dev friendsofphp/php-cs-fixer; fi
+  # - composer install --no-scripts --no-progress --no-suggest
+  # - cp config/parameters.yml.travis config/parameters.yml
+  # - composer up --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
+  - composer install --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
+  - composer show
+
+before_script:
+
+script:
+  # - php -l *.php
+  # - for f in $(find . -name \*.php) ; do php -l $f ; done
+  # - find . -path './vendor' -prune -o -name \*.php -print
+  # - ./vendor/bin/simple-phpunit
+  # this checks that the source code follows the Symfony Code Syntax rules
+  - if [[ $TRAVIS_PHP_VERSION = '7.1' ]]; then ./vendor/bin/php-cs-fixer fix --stop-on-violation --diff --dry-run -vvv --using-cache=no; fi
+  # this checks that the YAML config files contain no syntax errors
+  # - ./bin/console lint:yaml config
+  # - ./bin/console lint:yaml @CodeExplorerBundle
+  # this checks that the Twig template files contain no syntax errors
+  # - ./bin/console lint:twig templates @CodeExplorerBundle
+  # this checks that the XLIFF translations contain no syntax errors
+  # - ./bin/console lint:xliff templates
+  # this checks that the application doesn't use dependencies with known security vulnerabilities
+  # - ./bin/console security:check --end-point=http://security.sensiolabs.org/check_lock
+  - for f in $(find ./vendor -name \*.php) ; do php -l $f > /dev/null ; done # Should be the last line of install but sometimes long to execute and little can be done for errors found.
+
+# inspirated from 
+  # symfony/symfony-demo
+  # TODO: https://github.com/doctrine/dbal/blob/v2.5.13/.travis.yml
