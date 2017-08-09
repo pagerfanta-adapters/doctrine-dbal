@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Pagerfanta Adapters project, Doctrine DBAL package.
+ *
+ * (c) Jean-Bernard Addor
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 // TODO
 //* Add tests specific to DoctrineDbal2ModifiersAdapter
 //* Add tests with (stricly) monotonly ordered queries and show error
