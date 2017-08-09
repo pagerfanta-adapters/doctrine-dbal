@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the Doctrine DBAL Util package.
+ *
+ * (c) Jean-Bernard Addor
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace PagerfantaAdapters\Doctrine\DBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use Pagerfanta\Exception\InvalidArgumentException;
 use Pagerfanta\Adapter\AdapterInterface;
+use Pagerfanta\Exception\InvalidArgumentException;
 
 /**
  * @author Jean-Bernard Addor <jean-bernard.addor@umontreal.ca>
@@ -16,11 +25,12 @@ class DoctrineDbal2ModifiersAdapter implements AdapterInterface
     private $queryBuilder;
     private $finishQueryBuilderModifier;
     private $countQueryBuilderModifier;
+
     /**
      * Constructor.
      *
-     * @param QueryBuilder $queryBuilder              A DBAL query builder.
-     * @param callable     $countQueryBuilderModifier A callable to modifier the query builder to count.
+     * @param QueryBuilder $queryBuilder              A DBAL query builder
+     * @param callable     $countQueryBuilderModifier A callable to modifier the query builder to count
      */
     public function __construct(QueryBuilder $queryBuilder, $finishQueryBuilderModifier, $countQueryBuilderModifier)
     {
@@ -37,6 +47,7 @@ class DoctrineDbal2ModifiersAdapter implements AdapterInterface
         $this->finishQueryBuilderModifier = $finishQueryBuilderModifier;
         $this->countQueryBuilderModifier = $countQueryBuilderModifier;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -44,14 +55,18 @@ class DoctrineDbal2ModifiersAdapter implements AdapterInterface
     {
         $qb = $this->prepareCountQueryBuilder();
         $result = $qb->execute()->fetchColumn();
+
         return (int) $result;
     }
+
     private function prepareCountQueryBuilder()
     {
         $qb = clone $this->queryBuilder;
         call_user_func($this->countQueryBuilderModifier, $qb);
+
         return $qb;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -62,6 +77,7 @@ class DoctrineDbal2ModifiersAdapter implements AdapterInterface
         $result = $qb->setMaxResults($length)
             ->setFirstResult($offset)
             ->execute();
+
         return $result->fetchAll();
     }
 }
