@@ -16,8 +16,8 @@
 
 namespace PagerfantaAdapters\Doctrine\DBAL\Tests;
 
-use DoctrineDbalUtil\DbalTestingUtil\DoctrineDbalTestCase;
 use Doctrine\DBAL\Query\QueryBuilder;
+use DoctrineDbalUtil\DbalTestingUtil\DoctrineDbalTestCase;
 use PagerfantaAdapters\Doctrine\DBAL\DoctrineDbal2ModifiersAdapter;
 
 class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
