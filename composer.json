@@ -15,8 +15,7 @@
         "pagerfanta/pagerfanta": "^1.0.5"
     },
     "require-dev": {
-        "doctrine-dbal-util/dbal-testing-util": "^2.4@dev",
-        "phpunit/phpunit": "~4 | ~5 | ~6"
+        "doctrine-dbal-util/dbal-testing-util": "^2.4@dev"
     },
     "suggest": {
     },
