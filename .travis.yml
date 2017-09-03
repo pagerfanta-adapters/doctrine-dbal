@@ -1,68 +1,98 @@
-language: php
+---
 sudo: false
+language: php
 
 cache:
   directories:
     - $HOME/.composer/cache/files
 
-addons:
-  # postgresql: "9.6"
-
-services:
-  # - postgresql
-
 matrix:
   fast_finish: true
   include:
     - php: 5.4
+      env:
+        - PHPUNIT=phpunit-4.8
+        - TEST_LINT=`true`
     - php: 5.5
+      env:
+        - PHPUNIT=phpunit-4.8
+        - TEST_LINT=`true`
+        - SENSIO_SECURITY=`true`
     - php: 5.6
+      env:
+        - PHPUNIT=phpunit-5.7
+        - TEST_LINT=`true`
+        - PHP_CS_FIXER=`true`
+        - SENSIO_SECURITY=`true`
     - php: 7.0
+      env:
+        - PHPUNIT=phpunit
+        - TEST_LINT=`true`
+        - PHP_CS_FIXER=`true`
+        - SENSIO_SECURITY=`true`
     - php: 7.1
+      env:
+        - PHPUNIT=phpunit
+        - TEST_LINT=`true`
+        - PHP_CS_FIXER=`true`
+        - SENSIO_SECURITY=`true`
+    - php: 7.2
+      env:
+        - PHPUNIT=phpunit
+        - TEST_LINT=`true`
+        - SENSIO_SECURITY=`true`
+    - php: nightly
+      env:
+        - PHPUNIT=phpunit
+        - TEST_LINT=`true`
+        - SENSIO_SECURITY=`true`
+  allow_failures:
+    - php: 5.4
+    - php: 5.5 # needs older phpunit
     - php: 7.2
     - php: nightly
 
 before_install:
-  - if [ -f /home/travis/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/xdebug.ini ]; then phpenv config-rm xdebug.ini; fi
-  - for f in $(find . -path './vendor' -prune -o -name \*.php -print) ; do php -l $f ; done # Do this first!
-  - composer self-update # May help using cache for php packages.
-  # - ls /home/travis/.phpenv/versions/5.6/etc/conf.d
-  # - phpenv config-add ~travis.php.ini # name choosen for it to be executed after travis.ini
-  # - ls /home/travis/.phpenv/versions/5.6/etc/conf.d
-  #^ Shows the (alphabetical) order used for execution, last executed overrides the parameters
-  # - psql -c 'create database travis_ci_test;' -U postgres
+  - echo $PHPUNIT
+  - pwd
+  - echo $HOME
+  - echo $TRAVIS_PHP_VERSION
+  - which composer
+  - ls /tmp
+  - php --ini
+  - xdebug=/home/travis/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/xdebug.ini
+  - if [[ -f $xdebug ]]; then cat $xdebug; cp $xdebug /tmp; phpenv config-rm xdebug.ini; fi
+  - xdebug_php=
+  - if [[ -f /tmp/xdebug.ini ]]; then xdebug_php='-c /tmp/xdebug.ini'; fi
+  - install --directory .travis/bin
+  - if [[ -v PHP_CS_FIXER ]]; then wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar --output-document=.travis/bin/php-cs-fixer; fi
+  - if [[ -v PHPUNIT ]]; then wget https://phar.phpunit.de/${PHPUNIT}.phar --output-document=.travis/bin/$PHPUNIT; fi
+  - if [[ -v SENSIO_SECURITY ]]; then wget http://get.sensiolabs.org/security-checker.phar --output-document=.travis/bin/security-checker; fi
 
 install:
   - composer validate
-  - composer require --dev phpunit/phpunit
-  - if [[ $TRAVIS_PHP_VERSION = '7.1' ]]; then composer require --dev friendsofphp/php-cs-fixer; fi
-  # - composer install --no-scripts --no-progress --no-suggest
-  # - cp config/parameters.yml.travis config/parameters.yml
-  # - composer up --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
-  - composer install --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
+  - composer install --no-scripts --no-progress --no-suggest
+  - if [[ -f config/parameters.yml.travis ]]; then cp config/parameters.yml.travis config/parameters.yml; fi
+  - composer up --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
   - composer show
-  - composer show --outdated
 
 before_script:
 
 script:
-  # - php -l *.php
-  # - for f in $(find . -name \*.php) ; do php -l $f ; done
-  # - find . -path './vendor' -prune -o -name \*.php -print
-  - ./vendor/bin/phpunit tests
-  # this checks that the source code follows the Symfony Code Syntax rules
-  - if [[ $TRAVIS_PHP_VERSION = '7.1' ]]; then ./vendor/bin/php-cs-fixer fix --stop-on-violation --diff --dry-run -vvv --using-cache=no; fi
-  # this checks that the YAML config files contain no syntax errors
-  # - ./bin/console lint:yaml config
-  # - ./bin/console lint:yaml @CodeExplorerBundle
-  # this checks that the Twig template files contain no syntax errors
-  # - ./bin/console lint:twig templates @CodeExplorerBundle
-  # this checks that the XLIFF translations contain no syntax errors
-  # - ./bin/console lint:xliff templates
-  # this checks that the application doesn't use dependencies with known security vulnerabilities
-  # - ./bin/console security:check --end-point=http://security.sensiolabs.org/check_lock
-  - for f in $(find ./vendor -name \*.php) ; do php -l $f > /dev/null ; done # Should be the last line of install but sometimes long to execute and little can be done for errors found.
+  - for f in $(find . -path './vendor' -prune -o -path './tests' -prune -o -name \*.php -print) ; do php -l $f ; done # Do this first!
+  - if [[ -v TEST_LINT ]]; then for f in $(find ./tests -name \*.php -print); do php -l $f; done; fi
+  - if [[ -v PHP_CS_FIXER ]]; then php .travis/bin/php-cs-fixer --version; fi
+  - if [[ -v PHP_CS_FIXER ]]; then php .travis/bin/php-cs-fixer fix --stop-on-violation --diff --dry-run -vvv --using-cache=no; fi
+  - if [[ -v PHPUNIT ]]; then php --ini -c /tmp/xdebug.ini; php $xdebug_php .travis/bin/$PHPUNIT; fi
 
-# inspirated from 
+  - if [[ -v SENSIO_SECURITY ]]; then php .travis/bin/security-checker security:check --end-point=http://security.sensiolabs.org/check_lock; fi
+    #^ This checks that the application doesn't use dependencies with known security vulnerabilities
+  - if [[ -v VENDOR_LINT ]]; then for f in $(find ./vendor -name \*.php); do php -l $f > /dev/null; done; fi
+    #^ Should be the last line of install but sometimes long to execute and little can be done for errors found.
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash) -s /tmp
+
+# inspirated from:
   # symfony/symfony-demo
-  # TODO: https://github.com/doctrine/dbal/blob/v2.5.13/.travis.yml
+  # https://github.com/doctrine/dbal/blob/v2.5.13/.travis.yml
