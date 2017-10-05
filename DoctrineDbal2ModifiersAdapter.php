@@ -34,7 +34,7 @@ class DoctrineDbal2ModifiersAdapter implements AdapterInterface
      */
     public function __construct(QueryBuilder $queryBuilder, $finishQueryBuilderModifier, $countQueryBuilderModifier)
     {
-        if ($queryBuilder->getType() !== QueryBuilder::SELECT) {
+        if (QueryBuilder::SELECT !== $queryBuilder->getType()) {
             throw new InvalidArgumentException('Only SELECT queries can be paginated.');
         }
         if (!is_callable($finishQueryBuilderModifier)) {
