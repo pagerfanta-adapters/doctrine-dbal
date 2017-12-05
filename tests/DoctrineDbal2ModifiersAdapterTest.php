@@ -117,6 +117,19 @@ class DoctrineDbal2ModifiersAdapterTest extends DoctrineDbalTestCase
         new DoctrineDbal2ModifiersAdapter($this->qb, $finishQueryBuilderModifier, $countQueryBuilderModifier);
     }
 
+    /**
+     * @expectedException \Pagerfanta\Exception\InvalidArgumentException
+     */
+    public function testItShouldThrowAnInvalidArgumentExceptionIfTheFinishQueryBuilderModifierIsNotACallable()
+    {
+        $finishQueryBuilderModifier = 'ups';
+
+        $countQueryBuilderModifier = function (QueryBuilder $queryBuilder) {
+        };
+
+        new DoctrineDbal2ModifiersAdapter($this->qb, $finishQueryBuilderModifier, $countQueryBuilderModifier);
+    }
+
     private function createAdapterToTestGetNbResults()
     {
         $finishQueryBuilderModifier = function (QueryBuilder $queryBuilder) {
