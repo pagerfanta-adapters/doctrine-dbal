@@ -45,7 +45,7 @@ before_install:
   - if [[ -v PHPUNIT ]]; then wget https://phar.phpunit.de/${PHPUNIT}.phar --output-document=.travis/bin/$PHPUNIT; fi
   - if [[ -v SENSIO_SECURITY ]]; then wget http://get.sensiolabs.org/security-checker.phar --output-document=.travis/bin/security-checker; fi
   - composer global require --dev friendsofphp/php-cs-fixer:">=1.12" || true
-  - composer global require --dev phpstan/phpstan-phpunit || true
+  - composer global require --dev phpstan/phpstan-phpunit || composer global require --dev phpunit/phpunit
   - composer global require --dev sensiolabs/security-checker || composer global require --dev sensiolabs/security-checker:^3.0
 
 install:
