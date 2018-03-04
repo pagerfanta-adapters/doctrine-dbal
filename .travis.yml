@@ -3,7 +3,7 @@ language: php
 
 cache:
   directories:
-    - $HOME/.composer/cache/files
+  - $HOME/.composer/cache/files
 
 php:
 - nightly
@@ -26,41 +26,41 @@ matrix:
   - php: 5.3
     dist: precise
   allow_failures:
-    - php: nightly
-    - php: 5.3
+  - php: nightly
+  - php: 5.3
 
 before_install:
-  - xdebug=/home/travis/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/xdebug.ini
-  - if [[ -f $xdebug ]]; then cat $xdebug; cp $xdebug /tmp; phpenv config-rm xdebug.ini; fi
-  - xdebug_php=
-  - if [[ -f /tmp/xdebug.ini ]]; then xdebug_php='-c /tmp/xdebug.ini'; fi
-  - composer global require --dev friendsofphp/php-cs-fixer:">=1.12" || true
-  - composer global require --dev phpstan/phpstan-phpunit || composer global require --dev phpunit/phpunit
-  - composer global require --dev sensiolabs/security-checker || composer global require --dev sensiolabs/security-checker:^3.0
+- xdebug=/home/travis/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/xdebug.ini
+- if [[ -f $xdebug ]]; then cat $xdebug; cp $xdebug /tmp; phpenv config-rm xdebug.ini; fi
+- xdebug_php=
+- if [[ -f /tmp/xdebug.ini ]]; then xdebug_php='-c /tmp/xdebug.ini'; fi
+- composer global require --dev friendsofphp/php-cs-fixer:">=1.12" || true
+- composer global require --dev phpstan/phpstan-phpunit || composer global require --dev phpunit/phpunit
+- composer global require --dev sensiolabs/security-checker || composer global require --dev sensiolabs/security-checker:^3.0
 
 install:
-  - composer validate
-  - composer install --no-scripts --no-progress --no-suggest
-  - if [[ -f config/parameters.yml.travis ]]; then cp config/parameters.yml.travis config/parameters.yml; fi
-  - composer up --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
-  - composer show
+- composer validate
+- composer install --no-scripts --no-progress --no-suggest
+- if [[ -f config/parameters.yml.travis ]]; then cp config/parameters.yml.travis config/parameters.yml; fi
+- composer up --no-progress --no-suggest --optimize-autoloader --apcu-autoloader
+- composer show
 
 before_script:
 
 script:
-  - for f in $(find . -path './vendor' -prune -o -path './tests' -prune -o -name \*.php -print) ; do php -l $f ; done # Do this first!
-  - if [[ -v TEST_LINT ]]; then for f in $(find ./tests -name \*.php -print); do php -l $f; done; fi
-  - if command -v php-cs-fixer; then php-cs-fixer fix --diff --dry-run -vvv --using-cache=no; fi
-  - if command -v phpstan; then phpstan analyse -v --level max *.php; fi
-  - php $xdebug_php $(command -v phpunit)
-  - security-checker security:check --end-point=http://security.sensiolabs.org/check_lock ~/.composer/composer.lock
-  - security-checker security:check --end-point=http://security.sensiolabs.org/check_lock
-    #^ This checks that the application doesn't use dependencies with known security vulnerabilities
-  - if [[ -v VENDOR_LINT ]]; then for f in $(find ./vendor -name \*.php); do php -l $f > /dev/null; done; fi
-    #^ Should be the last line of install but sometimes long to execute and little can be done for errors found.
+- for f in $(find . -path './vendor' -prune -o -path './tests' -prune -o -name \*.php -print) ; do php -l $f ; done # Do this first!
+- if [[ -v TEST_LINT ]]; then for f in $(find ./tests -name \*.php -print); do php -l $f; done; fi
+- if command -v php-cs-fixer; then php-cs-fixer fix --diff --dry-run -vvv --using-cache=no; fi
+- if command -v phpstan; then phpstan analyse -v --level max *.php; fi
+- php $xdebug_php $(command -v phpunit)
+- security-checker security:check --end-point=http://security.sensiolabs.org/check_lock ~/.composer/composer.lock
+- security-checker security:check --end-point=http://security.sensiolabs.org/check_lock
+  #^ This checks that the application doesn't use dependencies with known security vulnerabilities
+- if [[ -v VENDOR_LINT ]]; then for f in $(find ./vendor -name \*.php); do php -l $f > /dev/null; done; fi
+  #^ Should be the last line of install but sometimes long to execute and little can be done for errors found.
 
 after_success:
-    - bash <(curl -s https://codecov.io/bash) -s /tmp
+- bash <(curl -s https://codecov.io/bash) -s /tmp
 
 # inspirated from:
   # symfony/symfony-demo
