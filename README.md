@@ -1,5 +1,6 @@
 # doctrine-dbal
 Doctrine DBAL Adapters for Pagerfanta
+
 [![PHPPackages Rank](https://phppackages.org/p/pagerfanta-adapters/doctrine-dbal/badge/rank.svg)](https://phppackages.org/p/pagerfanta-adapters/doctrine-dbal)
 [![Monthly Downloads](https://poser.pugx.org/pagerfanta-adapters/doctrine-dbal/d/monthly)](https://packagist.org/packages/pagerfanta-adapters/doctrine-dbal)
 <!---
