@@ -63,10 +63,11 @@ script:
   - if [[ -v PHP_CS_FIXER ]]; then php .travis/bin/php-cs-fixer --version; fi
   - if [[ -v PHP_CS_FIXER ]]; then php .travis/bin/php-cs-fixer fix --diff --dry-run -vvv --using-cache=no; fi
   - if command -v php-cs-fixer; then php-cs-fixer fix --diff --dry-run -vvv --using-cache=no; fi
-  - ls -l --color vendor/friendsofphp/php-cs-fixer/src/Config.php
-  - ls -l --color ~/.composer/vendor/friendsofphp/php-cs-fixer/src/Config.php
+  # - ls -l --color vendor/friendsofphp/php-cs-fixer/src/Config.php
+  # - ls -l --color ~/.composer/vendor/friendsofphp/php-cs-fixer/src/Config.php
   # - if command -v phpstan && [[ -f vendor/friendsofphp/php-cs-fixer/src/Config.php ]]; then phpstan analyse -v --level max *.php; fi
-  - if command -v phpstan && command -v php-cs-fixer; then phpstan analyse -v --level max *.php; fi
+  # - if command -v phpstan && command -v php-cs-fixer; then phpstan analyse -v --level max *.php; fi
+  - if command -v phpstan; then phpstan analyse -v --level max *.php; fi
   - if [[ -v PHPUNIT ]]; then php --ini -c /tmp/xdebug.ini; php $xdebug_php .travis/bin/$PHPUNIT; fi
   - php --ini -c /tmp/xdebug.ini
   - php $xdebug_php $(command -v phpunit)
