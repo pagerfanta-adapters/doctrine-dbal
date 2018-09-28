@@ -37,10 +37,10 @@ class DoctrineDbal2ModifiersAdapter implements AdapterInterface
         if (QueryBuilder::SELECT !== $queryBuilder->getType()) {
             throw new InvalidArgumentException('Only SELECT queries can be paginated.');
         }
-        if (!is_callable($finishQueryBuilderModifier)) {
+        if (!\is_callable($finishQueryBuilderModifier)) {
             throw new InvalidArgumentException('The finish query builder modifier must be a callable.');
         }
-        if (!is_callable($countQueryBuilderModifier)) {
+        if (!\is_callable($countQueryBuilderModifier)) {
             throw new InvalidArgumentException('The count query builder modifier must be a callable.');
         }
         $this->queryBuilder = clone $queryBuilder;
@@ -62,7 +62,7 @@ class DoctrineDbal2ModifiersAdapter implements AdapterInterface
     private function prepareCountQueryBuilder()
     {
         $qb = clone $this->queryBuilder;
-        call_user_func($this->countQueryBuilderModifier, $qb);
+        \call_user_func($this->countQueryBuilderModifier, $qb);
 
         return $qb;
     }
@@ -73,7 +73,7 @@ class DoctrineDbal2ModifiersAdapter implements AdapterInterface
     public function getSlice($offset, $length)
     {
         $qb = clone $this->queryBuilder;
-        call_user_func($this->finishQueryBuilderModifier, $qb);
+        \call_user_func($this->finishQueryBuilderModifier, $qb);
         $result = $qb->setMaxResults($length)
             ->setFirstResult($offset)
             ->execute();
