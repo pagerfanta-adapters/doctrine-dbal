@@ -28,6 +28,7 @@ matrix:
     dist: precise
   allow_failures:
   - php: nightly
+  - php: 5.4
   - php: 5.3
 
 before_install:
